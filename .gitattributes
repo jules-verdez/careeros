@@ -1,0 +1,21 @@
+* text=auto
+*.py text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.toml text eol=lf
+*.yml text eol=lf
+
+# Defence in depth for git archive; use the reviewed manifest export for first publication.
+AGENTS.md export-ignore
+.claude export-ignore
+.codex export-ignore
+.agents export-ignore
+_private export-ignore
+DRAFTS_REVIEW.md export-ignore
+generate_links.py export-ignore
+scripts/boards.json export-ignore
+scripts/targets*.json export-ignore
+scripts/*20??_??_??*.py export-ignore
+scripts/send*.py export-ignore
+scripts/stage_new_drafts.py export-ignore
+scripts/normalize_market_run.py export-ignore

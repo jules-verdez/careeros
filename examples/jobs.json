@@ -1,0 +1,69 @@
+[
+  {
+    "source_kind": "greenhouse",
+    "source_name": "Fictional demonstration",
+    "external_id": "demo-001",
+    "source_url": "https://example.test/jobs/demo-001",
+    "company_name": "Example Research",
+    "company_domain": "example.test",
+    "company_website_url": "https://example.test",
+    "title": "Quantitative Researcher",
+    "location": "Remote",
+    "remote_policy": "hybrid",
+    "employment_type": "full_time",
+    "description": "Fictional demonstration role for the offline workflow.",
+    "posted_at": "2000-01-01T09:00:00+00:00",
+    "confidence": 0.95,
+    "requirements": [
+      "Python",
+      "Statistics",
+      "Reproducible empirical research"
+    ],
+    "raw": {
+      "department": "Quantitative Research"
+    }
+  },
+  {
+    "source_kind": "career_page",
+    "source_name": "Fictional demonstration",
+    "external_id": "demo-002",
+    "source_url": "https://example.test/jobs/demo-002",
+    "company_name": "Example Research",
+    "company_domain": "example.test",
+    "company_website_url": "https://example.test",
+    "title": "Quantitative Researcher",
+    "location": "Remote",
+    "remote_policy": "hybrid",
+    "employment_type": "full_time",
+    "description": "Fictional demonstration role for the offline workflow.",
+    "posted_at": "2000-01-02T09:00:00+00:00",
+    "confidence": 0.99,
+    "requirements": [
+      "Python",
+      "Statistics",
+      "Reproducible empirical research"
+    ],
+    "raw": {
+      "team": "Quantitative Research"
+    }
+  },
+  {
+    "source_kind": "lever",
+    "source_name": "Fictional demonstration",
+    "external_id": "demo-003",
+    "source_url": "https://example.test/jobs/demo-003",
+    "company_name": "Example Systems",
+    "company_domain": "example.test",
+    "title": "Quant Platform Engineer",
+    "location": "Remote",
+    "employment_type": "full_time",
+    "description": "Fictional demonstration role for the offline workflow.",
+    "posted_at": "2000-01-03T09:00:00+00:00",
+    "confidence": 0.9,
+    "requirements": [
+      "Python",
+      "Distributed systems",
+      "Market data"
+    ]
+  }
+]

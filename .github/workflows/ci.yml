@@ -1,0 +1,34 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+      - run: uv sync --frozen --extra dev
+      - run: uv run python scripts/public_release.py --check
+      - run: uv run career --database-url sqlite:///ci.db init
+      - run: uv run ruff check .
+      - run: uv run ruff format --check .
+      - run: uv run mypy
+      - run: uv run pytest --cov --cov-report=term-missing
+      - run: uv build
+      - name: Test installed wheel outside the checkout
+        run: |
+          uv venv "$RUNNER_TEMP/careeros-wheel"
+          uv pip install --python "$RUNNER_TEMP/careeros-wheel/bin/python" dist/*.whl
+          cd "$RUNNER_TEMP"
+          "$RUNNER_TEMP/careeros-wheel/bin/career" --database-url sqlite:///wheel-smoke.db init
+          "$RUNNER_TEMP/careeros-wheel/bin/career" --database-url sqlite:///wheel-smoke.db discover --from-json "$GITHUB_WORKSPACE/examples/jobs.json"
+          "$RUNNER_TEMP/careeros-wheel/bin/career" --database-url sqlite:///wheel-smoke.db review
+          "$RUNNER_TEMP/careeros-wheel/bin/career" --database-url sqlite:///wheel-smoke.db audit verify

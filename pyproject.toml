@@ -1,0 +1,100 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "careeros"
+version = "0.1.0rc2"
+description = "A human-governed operating system for career discovery, research, outreach, and learning."
+readme = "README.md"
+requires-python = ">=3.12"
+license = "LicenseRef-CareerOS-Single-Seat-Commercial"
+license-files = ["LICENSE"]
+authors = [{ name = "CareerOS contributors" }]
+dependencies = [
+  "alembic>=1.16,<2",
+  "apify-client>=3.1.1",
+  "pydantic>=2.11,<3",
+  "pydantic-settings>=2.10,<3",
+  "python-dotenv>=1.2.2",
+  "rich>=14,<15",
+  "sqlalchemy>=2.0.41,<3",
+  "typer>=0.16,<1",
+]
+
+[project.optional-dependencies]
+dev = [
+  "mypy>=1.16,<2",
+  "pytest>=8.4,<9",
+  "pytest-cov>=6.2,<7",
+  "ruff>=0.12,<1",
+]
+
+[project.scripts]
+career = "careeros.cli:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/careeros"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"prompts" = "careeros/_resources/prompts"
+"database/migrations" = "careeros/_resources/database/migrations"
+"alembic.ini" = "careeros/_resources/alembic.ini"
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "/.env.example",
+  "/.gitattributes",
+  "/.github",
+  "/.gitignore",
+  "/CONTRIBUTING.md",
+  "/LICENSE",
+  "/README.md",
+  "/SECURITY.md",
+  "/alembic.ini",
+  "/database/migrations",
+  "/docs",
+  "/examples",
+  "/prompts",
+  "/pyproject.toml",
+  "/scripts/public_release.py",
+  "/src/careeros",
+  "/tests",
+  "/uv.lock",
+]
+exclude = ["**/__pycache__", "**/*.pyc"]
+
+[tool.pytest.ini_options]
+addopts = "-q --strict-config --strict-markers"
+testpaths = ["tests"]
+
+[tool.coverage.run]
+branch = true
+source = ["careeros"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+fail_under = 85
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+# One-off analysis scripts and generated packets are not part of the product. They are
+# excluded from the repository as well, so holding them to the package's lint gate would
+# fail CI on files CI never sees.
+extend-exclude = ["artifacts", "output", "tmp", "dist", "_private"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "A", "C4", "DTZ", "PTH", "RUF"]
+ignore = ["A003"]
+
+[tool.ruff.lint.per-file-ignores]
+"database/migrations/versions/*.py" = ["E501"]
+"tests/**/*.py" = ["S101"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+plugins = ["sqlalchemy.ext.mypy.plugin"]
+packages = ["careeros"]
